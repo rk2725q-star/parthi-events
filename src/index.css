@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: #F8FAFC;
+  background: #0F172A;
+  overflow-x: hidden;
+}
+
+:root {
+  --navy: #0F172A;
+  --navy2: #1E293B;
+  --navy3: #334155;
+  --yellow: #FACC15;
+  --yellow2: #EAB308;
+  --yellow3: rgba(250, 204, 21, 0.15);
+  --white: #ffffff;
+  --text-muted: #94A3B8;
+  --border-color: rgba(255,255,255,0.08);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: var(--white);
+}
+
+/* Button Shared Styles */
+.btn-yellow {
+  background: var(--yellow);
+  color: #000;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(250, 204, 21, 0.2);
+}
+
+.btn-yellow:hover {
+  background: var(--yellow2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+}
+
+.btn-outline-white {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.3s;
+}
+
+.btn-outline-white:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.section {
+  padding: 80px 32px;
+}
+
+.section-alt {
+  padding: 80px 32px;
+  background: var(--navy2);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-tag {
+  display: inline-block;
+  background: var(--yellow3);
+  color: var(--yellow);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 18px;
+  border-radius: 30px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid rgba(250, 204, 21, 0.2);
+}
+
+.section-header h2 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 16px;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.6;
+}

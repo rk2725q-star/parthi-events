@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Jost', sans-serif;
   color: #F8FAFC;
   background: #0F172A;
   overflow-x: hidden;
@@ -25,7 +25,7 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', serif;
   color: var(--white);
 }
 
@@ -37,9 +37,9 @@ h1, h2, h3, h4, h5, h6 {
   padding: 14px 28px;
   border-radius: 30px;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Jost', sans-serif;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(250, 204, 21, 0.2);
 }
@@ -58,8 +58,9 @@ h1, h2, h3, h4, h5, h6 {
   padding: 14px 28px;
   border-radius: 30px;
   font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Jost', sans-serif;
   transition: all 0.3s;
 }
 

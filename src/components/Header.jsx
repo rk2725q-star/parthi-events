@@ -1,6 +1,6 @@
 import './Header.css';
 
-const Header = () => {
+const Header = ({ setShowPackages }) => {
   return (
     <nav className="navbar">
       <a href="#home" className="brand-logo">
@@ -11,11 +11,11 @@ const Header = () => {
       </a>
       
       <div className="nav-links">
-        <a href="#home">Home</a>
-        <a href="#packages">Packages</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
+        <a href="#home" onClick={() => setShowPackages(false)}>Home</a>
+        <a href="#packages" onClick={(e) => { e.preventDefault(); setShowPackages(true); window.scrollTo(0,0); }}>Packages</a>
+        <a href="#gallery" onClick={() => setShowPackages(false)}>Gallery</a>
+        <a href="#reviews" onClick={() => setShowPackages(false)}>Reviews</a>
+        <a href="#contact" onClick={() => setShowPackages(false)}>Contact</a>
       </div>
 
       <div className="nav-right">

@@ -1,13 +1,15 @@
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   max-width: 1200px;
   margin: 0 auto;
 }
 .gallery-img {
-  height: 300px;
-  background-size: cover;
+  height: 400px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: rgba(15, 23, 42, 0.5);
   background-position: center;
   border-radius: 12px;
   transition: transform 0.3s;
@@ -16,6 +18,9 @@
 .gallery-img:hover {
   transform: scale(1.03);
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
   .gallery-grid { grid-template-columns: 1fr; }
 }

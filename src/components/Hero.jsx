@@ -7,7 +7,7 @@ const backgrounds = [
   '/images/bg3.png'
 ];
 
-const Hero = () => {
+const Hero = ({ setShowPackages }) => {
   const [currentBg, setCurrentBg] = useState(0);
   const [showContact, setShowContact] = useState(false);
   const [showHearts, setShowHearts] = useState(false);
@@ -38,7 +38,7 @@ const Hero = () => {
         <p>Your trusted event partner from Kallakurichi. Memorable celebrations, premium planning, and lifetime experiences.</p>
         
         <div className="hero-btns">
-          <button className="btn-yellow">View Packages</button>
+          <button className="btn-yellow" onClick={() => setShowPackages(true)}>View Packages</button>
           <button className="btn-outline-white" onClick={() => setShowContact(true)}>Contact Us</button>
         </div>
 

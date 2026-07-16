@@ -2,13 +2,13 @@ import './Packages.css';
 
 const packages = [
   {
-    title: 'Dj Events',
+    title: 'Dj Party',
     subtitle: '',
     imgClass: 'pkg-img-1',
     features: ['Basic', 'Stark light', 'Smoke']
   },
   {
-    title: 'Birthday Function',
+    title: 'Birthday Party',
     subtitle: '',
     imgClass: 'pkg-img-2',
     features: ['Stage decoration', 'Photography', 'Videography']

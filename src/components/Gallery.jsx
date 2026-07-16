@@ -9,9 +9,10 @@ const Gallery = () => {
         <p>A glimpse into the magical moments we've created for our wonderful clients.</p>
       </div>
       <div className="gallery-grid">
-        <div className="gallery-img" style={{ backgroundImage: "url('/images/bg1.png')" }}></div>
-        <div className="gallery-img" style={{ backgroundImage: "url('/images/bg2.png')" }}></div>
-        <div className="gallery-img" style={{ backgroundImage: "url('/images/bg3.png')" }}></div>
+        <div className="gallery-img" style={{ backgroundImage: "url('/images/gallery1.png')" }}></div>
+        <div className="gallery-img" style={{ backgroundImage: "url('/images/gallery2.png')" }}></div>
+        <div className="gallery-img" style={{ backgroundImage: "url('/images/gallery3.png')" }}></div>
+        <div className="gallery-img" style={{ backgroundImage: "url('/images/gallery4.png')" }}></div>
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import './Header.css';
 
-const Header = ({ setShowPackages }) => {
+const Header = ({ setCurrentPage }) => {
+  const [showBooking, setShowBooking] = useState(false);
   return (
     <nav className="navbar">
       <a href="#home" className="brand-logo">
@@ -11,11 +13,11 @@ const Header = ({ setShowPackages }) => {
       </a>
       
       <div className="nav-links">
-        <a href="#home" onClick={() => setShowPackages(false)}>Home</a>
-        <a href="#packages" onClick={(e) => { e.preventDefault(); setShowPackages(true); window.scrollTo(0,0); }}>Packages</a>
-        <a href="#gallery" onClick={() => setShowPackages(false)}>Gallery</a>
-        <a href="#reviews" onClick={() => setShowPackages(false)}>Reviews</a>
-        <a href="#contact" onClick={() => setShowPackages(false)}>Contact</a>
+        <a href="#home" onClick={() => setCurrentPage('home')}>Home</a>
+        <a href="#packages" onClick={(e) => { e.preventDefault(); setCurrentPage('packages'); window.scrollTo(0,0); }}>Packages</a>
+        <a href="#gallery" onClick={(e) => { e.preventDefault(); setCurrentPage('gallery'); window.scrollTo(0,0); }}>Gallery</a>
+        <a href="#reviews" onClick={() => setCurrentPage('home')}>Reviews</a>
+        <a href="#contact" onClick={() => setCurrentPage('home')}>Contact</a>
       </div>
 
       <div className="nav-right">
@@ -29,8 +31,27 @@ const Header = ({ setShowPackages }) => {
             parthithala350@gmail.com
           </a>
         </div>
-        <button className="nav-btn">Book Now</button>
+        <button className="nav-btn" onClick={() => setShowBooking(true)}>Book Now</button>
       </div>
+
+      {showBooking && (
+        <div className="booking-popup-overlay">
+          <div className="booking-popup">
+            <button className="close-btn" onClick={() => setShowBooking(false)}>×</button>
+            <h3>Parthi Events</h3>
+            <p className="booking-subtitle">Booking Details</p>
+            <form className="booking-form" onSubmit={(e) => { e.preventDefault(); alert("Booking Submitted Successfully!"); setShowBooking(false); }}>
+              <input type="text" placeholder="Name" required />
+              <input type="text" placeholder="Address" required />
+              <input type="tel" placeholder="Phone number" required />
+              <input type="email" placeholder="Email" required />
+              <input type="text" placeholder="Location" required />
+              <textarea placeholder="Events mention" rows="3" required></textarea>
+              <button type="submit" className="btn-yellow" style={{ width: '100%', padding: '14px', marginTop: '10px' }}>Submit Booking</button>
+            </form>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

@@ -148,3 +148,76 @@
     grid-template-columns: 1fr;
   }
 }
+
+.booking-popup-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.booking-popup {
+  background: var(--navy);
+  border: 1px solid var(--border-color);
+  padding: 40px;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  animation: popupFadeIn 0.3s ease-out;
+}
+
+.booking-popup .close-btn {
+  position: absolute;
+  top: 20px; right: 24px;
+  background: none; border: none;
+  color: var(--text-muted); font-size: 32px;
+  cursor: pointer; line-height: 1;
+}
+
+.booking-popup .close-btn:hover { color: var(--yellow); }
+
+.booking-popup h3 {
+  color: var(--yellow);
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.booking-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking-form input,
+.booking-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.booking-form input:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: var(--yellow);
+  background: rgba(255, 255, 255, 0.05);
+}

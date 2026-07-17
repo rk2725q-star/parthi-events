@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './Packages.css';
 
 const packages = [
@@ -22,6 +23,8 @@ const packages = [
 ];
 
 const Packages = () => {
+  const [showBooking, setShowBooking] = useState(false);
+
   return (
     <section className="section" id="packages">
       <div className="section-header">
@@ -48,12 +51,32 @@ const Packages = () => {
               </div>
               
               <div className="pkg-footer" style={{ justifyContent: 'center' }}>
-                <button className="pkg-btn" style={{ width: '100%', padding: '12px' }}>Book Now</button>
+                <button className="pkg-btn" style={{ width: '100%', padding: '12px' }} onClick={() => setShowBooking(true)}>Book Now</button>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+
+      {showBooking && (
+        <div className="booking-popup-overlay">
+          <div className="booking-popup">
+            <button className="close-btn" onClick={() => setShowBooking(false)}>×</button>
+            <h3>Parthi Events</h3>
+            <p className="booking-subtitle">Booking Details</p>
+            <form className="booking-form" onSubmit={(e) => { e.preventDefault(); alert("Booking Submitted Successfully!"); setShowBooking(false); }}>
+              <input type="text" placeholder="Name" required />
+              <input type="text" placeholder="Address" required />
+              <input type="tel" placeholder="Phone number" required />
+              <input type="email" placeholder="Email" required />
+              <input type="text" placeholder="Location" required />
+              <textarea placeholder="Events mention" rows="3" required></textarea>
+              <button type="submit" className="btn-yellow" style={{ width: '100%', padding: '14px', marginTop: '10px' }}>Submit Booking</button>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -9,25 +9,37 @@ import Footer from './components/Footer';
 import './App.css';
 
 function App() {
-  const [showPackages, setShowPackages] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home');
 
   return (
     <>
-      <Header setShowPackages={setShowPackages} />
+      <Header setCurrentPage={setCurrentPage} />
       
-      {showPackages ? (
+      {currentPage === 'packages' && (
         <div style={{ paddingTop: '40px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Packages />
           <div style={{ textAlign: 'center', marginBottom: '80px', marginTop: '20px' }}>
-            <button className="btn-yellow" style={{ padding: '14px 40px', fontSize: '16px' }} onClick={() => setShowPackages(false)}>
+            <button className="btn-yellow" style={{ padding: '14px 40px', fontSize: '16px' }} onClick={() => setCurrentPage('home')}>
               ← Back to Home
             </button>
           </div>
         </div>
-      ) : (
-        <>
-          <Hero setShowPackages={setShowPackages} />
+      )}
+
+      {currentPage === 'gallery' && (
+        <div style={{ paddingTop: '40px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Gallery />
+          <div style={{ textAlign: 'center', marginBottom: '80px', marginTop: '20px' }}>
+            <button className="btn-yellow" style={{ padding: '14px 40px', fontSize: '16px' }} onClick={() => setCurrentPage('home')}>
+              ← Back to Home
+            </button>
+          </div>
+        </div>
+      )}
+
+      {currentPage === 'home' && (
+        <>
+          <Hero setCurrentPage={setCurrentPage} />
           <Reviews />
           <Contact />
         </>

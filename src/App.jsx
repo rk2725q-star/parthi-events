@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Packages from './components/Packages';
+import TravelPackages from './components/TravelPackages';
 import Gallery from './components/Gallery';
 import Reviews from './components/Reviews';
 import Contact from './components/Contact';
@@ -17,7 +18,7 @@ function App() {
       
       {currentPage === 'packages' && (
         <div style={{ paddingTop: '40px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <Packages />
+          <Packages setCurrentPage={setCurrentPage} />
           <div style={{ textAlign: 'center', marginBottom: '80px', marginTop: '20px' }}>
             <button className="btn-yellow" style={{ padding: '14px 40px', fontSize: '16px' }} onClick={() => setCurrentPage('home')}>
               ← Back to Home
@@ -25,6 +26,8 @@ function App() {
           </div>
         </div>
       )}
+
+
 
       {currentPage === 'gallery' && (
         <div style={{ paddingTop: '40px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

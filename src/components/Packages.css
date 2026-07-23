@@ -36,6 +36,11 @@
 .pkg-img-1 { background-image: url('/images/bg1.png'); background-color: #1B4F72; }
 .pkg-img-2 { background-image: url('/images/bg2.png'); background-color: #1E8449; }
 .pkg-img-3 { background-image: url('/images/bg3.png'); background-color: #1A5276; }
+.pkg-img-4 { background-image: url('/images/bg4.png'); background-color: #5B2C6F; }
+.pkg-img-5 { background-image: url('/images/bg5.png'); background-color: #7D6608; }
+.pkg-img-6 { background-image: url('/images/bg6.png'); background-color: #283747; }
+.pkg-img-7 { background-image: url('/images/bg7.png'); background-color: #4A235A; }
+.pkg-img-8 { background-image: url('/images/bg8.png'); background-color: #1F618D; }
 
 .pkg-badge {
   background: var(--yellow);
@@ -147,6 +152,75 @@
   .packages-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Load More Packages */
+.load-more-container {
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn-load-more {
+  background: linear-gradient(90deg, var(--yellow), #FFB75E);
+  color: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 36px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(250, 204, 21, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-load-more:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(250, 204, 21, 0.5);
+}
+
+/* Category Switch */
+.pkg-category-switch {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.pkg-switch-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pkg-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.pkg-switch-btn.active {
+  background: linear-gradient(90deg, var(--yellow), #FFB75E);
+  color: var(--navy);
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+}
+
+.custom-pkg-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 500px;
+  line-height: 1.5;
 }
 
 .booking-popup-overlay {

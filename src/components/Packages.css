@@ -33,6 +33,8 @@
   padding: 14px;
 }
 
+.pkg-img-photo { background-image: url('/images/bg_photo.png'); background-color: #2E4053; }
+.pkg-img-video { background-image: url('/images/bg_video.png'); background-color: #117864; }
 .pkg-img-1 { background-image: url('/images/bg1.png'); background-color: #1B4F72; }
 .pkg-img-2 { background-image: url('/images/bg2.png'); background-color: #1E8449; }
 .pkg-img-3 { background-image: url('/images/bg3.png'); background-color: #1A5276; }

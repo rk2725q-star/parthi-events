@@ -2,23 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import './Gallery.css';
 
 const galleryItems = [
-  // Birthday Category (6 items)
-  { id: 1, category: 'Birthday', title: 'Welcome to the Party', src: '/images/bday1.png' },
-  { id: 2, category: 'Birthday', title: 'About the Birthday Star', src: '/images/bday2.png' },
-  { id: 3, category: 'Birthday', title: 'Birthday Theme', src: '/images/bday3.png' },
-  { id: 4, category: 'Birthday', title: 'Decorations & Setup', src: '/images/bday4.png' },
-  { id: 5, category: 'Birthday', title: 'Cake Moment', src: '/images/bday5.png' },
-  { id: 6, category: 'Birthday', title: 'Photo Highlights', src: '/images/bday6.png' },
-  
-  // DJ Party Category (3 items)
-  { id: 7, category: 'DJ Party', title: 'Stage Setup', src: '/images/dj1.png' },
-  { id: 8, category: 'DJ Party', title: 'Crowd Vibe', src: '/images/dj2.png' },
-  { id: 9, category: 'DJ Party', title: 'Laser Show', src: '/images/dj3.png' },
-  
-  // Marriage Category (3 items)
-  { id: 10, category: 'Marriage', title: 'Mandapam Decor', src: '/images/mar1.png' },
-  { id: 11, category: 'Marriage', title: 'Garlands & Rituals', src: '/images/mar2.png' },
-  { id: 12, category: 'Marriage', title: 'Couple Entry', src: '/images/mar3.png' }
+  // Add your gallery items here when uploaded, e.g.:
+  // { id: 1, category: 'Birthday', title: 'Welcome to the Party', src: '/images/bday1.png' },
 ];
 
 const GalleryCard = ({ item, index, openViewer }) => {
@@ -217,10 +202,18 @@ const Gallery = () => {
       </div>
 
       <div className="gallery-3d-grid">
-        {filteredItems.map((item) => {
-          const absoluteIndex = galleryItems.findIndex(i => i.id === item.id);
-          return <GalleryCard key={item.id} item={item} index={absoluteIndex} openViewer={openViewer} />;
-        })}
+        {filteredItems.length > 0 ? (
+          filteredItems.map((item) => {
+            const absoluteIndex = galleryItems.findIndex(i => i.id === item.id);
+            return <GalleryCard key={item.id} item={item} index={absoluteIndex} openViewer={openViewer} />;
+          })
+        ) : (
+          <div className="gallery-empty-state">
+            <span className="empty-icon">📁</span>
+            <h3>No Photos Uploaded Yet</h3>
+            <p>Upload artwork to feature under {activeCategory === 'All' ? 'this gallery' : `the ${activeCategory} category`}.</p>
+          </div>
+        )}
       </div>
 
       {viewerIndex !== null && (

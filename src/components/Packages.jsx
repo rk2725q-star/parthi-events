@@ -4,6 +4,18 @@ import TravelPackages from './TravelPackages';
 
 const allPackages = [
   {
+    title: 'Photography',
+    subtitle: 'Professional event photo coverage',
+    imgClass: 'pkg-img-photo',
+    features: ['Basic Package', 'Premium Package', 'Elite Package', 'HD Album & Digital Soft Copies']
+  },
+  {
+    title: 'Videography',
+    subtitle: 'Cinematic video recording & editing',
+    imgClass: 'pkg-img-video',
+    features: ['4K Ultra HD Video', '1080p Full HD Video', 'Delivered with Pendrive', 'Cinematic Highlight Reel']
+  },
+  {
     title: 'Dj Party',
     subtitle: 'High-energy sound & light setup',
     imgClass: 'pkg-img-1',

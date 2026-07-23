@@ -20,6 +20,28 @@
   flex-wrap: wrap;
 }
 
+.gallery-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--glass-border);
+  border-radius: 20px;
+  color: var(--text-muted);
+}
+
+.gallery-empty-state .empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.gallery-empty-state h3 {
+  color: var(--white);
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
 .gallery-cat-btn {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--glass-border);

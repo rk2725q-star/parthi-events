@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Packages.css';
 import TravelPackages from './TravelPackages';
+import GraphicDesigningPackages from './GraphicDesigningPackages';
 
 const allPackages = [
   {
@@ -34,6 +35,24 @@ const allPackages = [
     features: ['Stage decoration', 'Garlands', 'Outdoor shoot', 'Photography', 'Videography', 'Catering']
   },
   {
+    title: 'Ear Piercing Ceremony',
+    subtitle: 'Auspicious traditional Kaadhu Kuthu event',
+    imgClass: 'pkg-img-ear-piercing',
+    features: ['Traditional Stage Decor', 'Brass Lamp & Floral Setup', 'Candid Photography', 'Return Gift Arrangements']
+  },
+  {
+    title: 'Catering Services',
+    subtitle: 'Delicious South Indian wedding & event feast',
+    imgClass: 'pkg-img-catering',
+    features: ['Traditional Banana Leaf (Ela Saappadu)', 'Vegetarian & Non-Veg Menus', 'Live Dosa & Sweet Counters', 'Professional Serving Staff']
+  },
+  {
+    title: 'Puberty Function',
+    subtitle: 'Grand Manjal Neerattu Vizha celebration',
+    imgClass: 'pkg-img-puberty',
+    features: ['Floral Mandapam & Backdrop', 'Grand Entry & Traditional Music', 'Traditional Silk & Light Setup', 'Photography & Videography']
+  },
+  {
     title: 'Reception',
     subtitle: 'Glamorous evening celebration',
     imgClass: 'pkg-img-4',
@@ -58,6 +77,12 @@ const allPackages = [
     features: ['Teddy Bear Mascot', 'Gorilla Mascot', 'Fun Crowd & Kids Interaction', 'Dance & Photo Performance']
   },
   {
+    title: 'Inviting Dance',
+    subtitle: 'Grand welcome entry dance troupe performance',
+    imgClass: 'pkg-img-inviting-dance',
+    features: ['Traditional & Fusion Dance Entry', 'Chenda Melam & Welcome Beats', 'Flower Shower & VIP Entrance', 'Stage & Floor Performance']
+  },
+  {
     title: 'Tent & Chairs',
     subtitle: 'Canopy, shamiana & event seating',
     imgClass: 'pkg-img-8',
@@ -66,18 +91,24 @@ const allPackages = [
 ];
 
 const Packages = () => {
-  const [activeTab, setActiveTab] = useState('events'); // 'events' | 'travel'
+  const [activeTab, setActiveTab] = useState('events'); // 'events' | 'travel' | 'design'
   const [showBooking, setShowBooking] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   const displayedPackages = showMore ? allPackages : allPackages.slice(0, 3);
 
+  const getSectionTitle = () => {
+    if (activeTab === 'events') return 'Premium Event Packages';
+    if (activeTab === 'travel') return 'Tour & Travel Packages';
+    return 'Graphic Designing & Printing Services';
+  };
+
   return (
     <section className="section" id="packages">
       <div className="section-header">
         <span className="section-tag">Our Services</span>
-        <h2>{activeTab === 'events' ? 'Premium Event Packages' : 'Tour & Travel Packages'}</h2>
-        <p>Explore our carefully curated packages designed to make your celebrations and trips truly unforgettable.</p>
+        <h2>{getSectionTitle()}</h2>
+        <p>Explore our carefully curated packages designed to make your celebrations, trips, and designs truly unforgettable.</p>
       </div>
 
       <div className="pkg-category-switch">
@@ -93,9 +124,15 @@ const Packages = () => {
         >
           ✈️ Travel Packages
         </button>
+        <button 
+          className={`pkg-switch-btn ${activeTab === 'design' ? 'active' : ''}`}
+          onClick={() => setActiveTab('design')}
+        >
+          🎨 Graphic Designing
+        </button>
       </div>
 
-      {activeTab === 'events' ? (
+      {activeTab === 'events' && (
         <>
           <div className="packages-grid">
             {displayedPackages.map((pkg, idx) => (
@@ -131,9 +168,11 @@ const Packages = () => {
             </p>
           </div>
         </>
-      ) : (
-        <TravelPackages />
       )}
+
+      {activeTab === 'travel' && <TravelPackages />}
+
+      {activeTab === 'design' && <GraphicDesigningPackages onBookNow={() => setShowBooking(true)} />}
 
       {showBooking && (
         <div className="booking-popup-overlay">

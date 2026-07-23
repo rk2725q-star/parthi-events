@@ -1,0 +1,224 @@
+.graphic-design-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.gd-hero-card {
+  position: relative;
+  background-image: url('/images/bg_graphic_design.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 24px;
+  padding: 48px 40px;
+  margin-bottom: 40px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.gd-hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(10, 25, 47, 0.92) 0%, rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.gd-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.gd-tag {
+  display: inline-block;
+  background: rgba(250, 204, 21, 0.15);
+  color: var(--yellow);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.gd-hero-content h2 {
+  font-size: 32px;
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-family: 'Playfair Display', serif;
+}
+
+.gd-hero-content p {
+  color: #CBD5E1;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.gd-provides-bar {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+
+.provides-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.provides-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.provides-tags span {
+  background: rgba(250, 204, 21, 0.1);
+  color: #E2E8F0;
+  border: 1px solid rgba(250, 204, 21, 0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Grid Layout */
+.gd-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.gd-card {
+  background: var(--navy2);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.gd-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  border-color: var(--yellow);
+}
+
+.gd-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.gd-icon {
+  font-size: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gd-card-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.gd-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.gd-features {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--yellow);
+  flex-grow: 1;
+}
+
+.gd-features h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.gd-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gd-features li {
+  font-size: 12px;
+  color: #CBD5E1;
+  padding: 3px 0 3px 16px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.gd-features li::before {
+  content: "✓";
+  color: var(--yellow);
+  font-size: 11px;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.gd-btn {
+  background: var(--white);
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.gd-btn:hover {
+  background: var(--yellow);
+}
+
+@media (max-width: 1100px) {
+  .gd-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .gd-grid {
+    grid-template-columns: 1fr;
+  }
+  .gd-hero-card {
+    padding: 28px 20px;
+  }
+  .gd-hero-content h2 {
+    font-size: 24px;
+  }
+}

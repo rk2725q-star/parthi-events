@@ -13,6 +13,47 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.brand-header-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-god-blessing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 2px solid rgba(255, 140, 0, 0.5);
+  padding-left: 14px;
+  line-height: 1.35;
+}
+
+.brand-god-blessing .god-line1 {
+  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FF5E36;
+  background: linear-gradient(90deg, #FF4500 0%, #FF8C00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 6px rgba(255, 69, 0, 0.4));
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.brand-god-blessing .god-line2 {
+  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #FFD700;
+  background: linear-gradient(90deg, #FFE000 0%, #FFB703 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.4));
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
 .brand-logo {
   display: flex;
   flex-direction: column;
@@ -119,8 +160,23 @@
   transform: translateY(-2px);
 }
 
+@media (max-width: 1100px) {
+  .brand-god-blessing .god-line1 {
+    font-size: 11px;
+  }
+  .brand-god-blessing .god-line2 {
+    font-size: 10px;
+  }
+}
+
 @media (max-width: 900px) {
   .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-god-blessing {
     display: none;
   }
 }

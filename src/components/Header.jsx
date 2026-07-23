@@ -5,12 +5,18 @@ const Header = ({ setCurrentPage }) => {
   const [showBooking, setShowBooking] = useState(false);
   return (
     <nav className="navbar">
-      <a href="#home" className="brand-logo">
-        <div className="brand-name">
-          PARTH<span className="brand-i">I<span className="brand-flame"></span></span>
+      <div className="brand-header-wrapper">
+        <a href="#home" className="brand-logo">
+          <div className="brand-name">
+            PARTH<span className="brand-i">I<span className="brand-flame"></span></span>
+          </div>
+          <div className="brand-sub">EVENT'S</div>
+        </a>
+        <div className="brand-god-blessing">
+          <span className="god-line1">ஸ்ரீ சித்தலூர் பெரியநாயகி அம்மன் துணை</span>
+          <span className="god-line2">ஸ்ரீ முருகன் துணை |</span>
         </div>
-        <div className="brand-sub">EVENT'S</div>
-      </a>
+      </div>
       
       <div className="nav-links">
         <a href="#home" onClick={() => setCurrentPage('home')}>Home</a>

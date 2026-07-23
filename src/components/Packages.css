@@ -38,10 +38,14 @@
 .pkg-img-1 { background-image: url('/images/bg1.png'); background-color: #1B4F72; }
 .pkg-img-2 { background-image: url('/images/bg2.png'); background-color: #1E8449; }
 .pkg-img-3 { background-image: url('/images/bg3.png'); background-color: #1A5276; }
+.pkg-img-ear-piercing { background-image: url('/images/bg_ear_piercing.png'); background-color: #7D6608; }
+.pkg-img-catering { background-image: url('/images/bg_catering.png'); background-color: #117864; }
+.pkg-img-puberty { background-image: url('/images/bg_puberty.png'); background-color: #5B2C6F; }
+.pkg-img-inviting-dance { background-image: url('/images/bg_inviting_dance.png'); background-color: #512E5F; }
 .pkg-img-4 { background-image: url('/images/bg4.png'); background-color: #5B2C6F; }
 .pkg-img-5 { background-image: url('/images/bg5.png'); background-color: #7D6608; }
 .pkg-img-6 { background-image: url('/images/bg6.png'); background-color: #283747; }
-.pkg-img-7 { background-image: url('/images/bg7.png'); background-color: #4A235A; }
+.pkg-img-7 { background-image: url('/images/bg7.png'); background-color: #4A235A; background-position: center 18%; }
 .pkg-img-8 { background-image: url('/images/bg8.png'); background-color: #1F618D; }
 
 .pkg-badge {

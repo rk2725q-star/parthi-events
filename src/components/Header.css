@@ -1,34 +1,47 @@
-/* ===== NAVBAR ===== */
+/* ================================================
+   NAVBAR — 2-Row Layout (Desktop single row / Mobile 2 rows)
+   ================================================ */
+
 .navbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  min-height: 80px;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(12px);
+  flex-direction: column;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 200;
-  border-bottom: 1px solid var(--border-color);
+  background: rgba(10, 18, 35, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(250, 204, 21, 0.15);
   box-sizing: border-box;
 }
 
-/* ===== BRAND LOGO + GOD TEXT ===== */
-.brand-header-wrapper {
+/* ── ROW 1 ── */
+.navbar-row1 {
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex-shrink: 0;
+  justify-content: space-between;
+  padding: 12px 40px;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* ── ROW 2 (hidden on desktop, shown on mobile) ── */
+.navbar-row2 {
+  display: none;
+}
+
+/* ================================================
+   BRAND LOGO
+   ================================================ */
 .brand-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand-name {
@@ -68,89 +81,75 @@
   text-transform: uppercase;
 }
 
-.brand-god-and-contact {
+/* ================================================
+   GOD NAME — desktop inline version
+   ================================================ */
+.brand-god-blessing {
   display: flex;
   flex-direction: column;
   border-left: 2px solid var(--yellow);
   padding-left: 14px;
-  gap: 4px;
-}
-
-.brand-god-blessing {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   line-height: 1.4;
-}
-
-.brand-god-blessing .god-line1 {
-  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-.brand-god-blessing .god-line2 {
-  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.4px;
-  opacity: 0.92;
-  white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-/* Contact info shown next to God name on mobile only */
-.navbar-mobile-contact {
-  display: none;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.navbar-mobile-contact a {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: rgba(255,255,255,0.8);
-  text-decoration: none;
-  font-size: 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.navbar-mobile-contact a svg {
-  color: var(--yellow);
   flex-shrink: 0;
 }
 
-/* ===== DESKTOP NAV LINKS ===== */
+/* Hide desktop god on mobile */
+.desktop-god {
+  display: flex;
+}
+
+.god-line1 {
+  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+.god-line2 {
+  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+/* ================================================
+   DESKTOP — NAV LINKS
+   ================================================ */
 .nav-links {
   display: flex;
   gap: 28px;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-links a {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255,255,255,0.82);
   text-decoration: none;
   font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
   color: var(--yellow);
 }
 
-/* ===== DESKTOP RIGHT SIDE ===== */
+/* ================================================
+   DESKTOP — RIGHT: CONTACT + BOOK NOW
+   ================================================ */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 .nav-contact {
@@ -162,47 +161,51 @@
 
 .nav-contact a {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255,255,255,0.82);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
 }
 
-.nav-contact a svg {
-  color: var(--yellow);
-}
+.nav-contact a:hover { color: var(--yellow); }
 
-.nav-btn, .desktop-book {
+.nav-contact a svg { color: var(--yellow); flex-shrink: 0; }
+
+.nav-btn {
   background: var(--yellow);
   color: #000;
   border: none;
-  padding: 12px 24px;
+  padding: 11px 22px;
   border-radius: 30px;
   font-size: 13px;
   font-family: 'DM Sans', sans-serif;
   cursor: pointer;
   font-weight: 700;
   transition: all 0.3s;
+  white-space: nowrap;
 }
 
-.nav-btn:hover, .desktop-book:hover {
+.nav-btn:hover {
   background: var(--yellow2);
   transform: translateY(-2px);
 }
 
-/* ===== HAMBURGER BUTTON (Mobile only) ===== */
+/* ================================================
+   HAMBURGER BUTTON
+   ================================================ */
 .hamburger-btn {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 28px;
-  height: 20px;
+  width: 26px;
+  height: 18px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 300;
   flex-shrink: 0;
 }
 
@@ -216,36 +219,96 @@
   transform-origin: center;
 }
 
-.hamburger-btn.open span:nth-child(1) {
-  transform: translateY(8.75px) rotate(45deg);
+.hamburger-btn.open span:nth-child(1) { transform: translateY(7.75px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-7.75px) rotate(-45deg); }
+
+/* ================================================
+   MOBILE ROW 2  — God Name (left) | Contact (right)
+   ================================================ */
+.navbar-row2 {
+  display: none;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 16px 9px;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(250,204,21,0.12);
+  background: rgba(6,12,26,0.6);
+  gap: 10px;
 }
 
-.hamburger-btn.open span:nth-child(2) {
-  opacity: 0;
+.row2-god {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
 
-.hamburger-btn.open span:nth-child(3) {
-  transform: translateY(-8.75px) rotate(-45deg);
+.row2-god .god-line1 {
+  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 
-/* ===== MOBILE OVERLAY ===== */
+.row2-god .god-line2 {
+  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+
+.row2-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.row2-contact a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255,255,255,0.82);
+  text-decoration: none;
+  font-size: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.row2-contact a:hover { color: var(--yellow); }
+.row2-contact a svg { color: var(--yellow); flex-shrink: 0; }
+
+/* ================================================
+   MOBILE DRAWER
+   ================================================ */
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   backdrop-filter: blur(2px);
   z-index: 250;
 }
 
-/* ===== MOBILE DRAWER ===== */
 .mobile-drawer {
   position: fixed;
   top: 0;
   right: -100%;
   width: min(300px, 85vw);
   height: 100vh;
-  background: #0a1628;
-  border-left: 1px solid var(--border-color);
+  background: #07101f;
+  border-left: 1px solid rgba(250,204,21,0.15);
   z-index: 300;
   display: flex;
   flex-direction: column;
@@ -253,23 +316,17 @@
   overflow-y: auto;
 }
 
-.mobile-drawer.open {
-  right: 0;
-}
+.mobile-drawer.open { right: 0; }
 
 .mobile-drawer-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 20px 16px;
-  border-bottom: 1px solid var(--border-color);
-  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(250,204,21,0.12);
 }
 
-.mobile-brand {
-  display: flex;
-  flex-direction: column;
-}
+.mobile-brand { display: flex; flex-direction: column; }
 
 .mobile-brand-name {
   font-family: 'Playfair Display', serif;
@@ -290,7 +347,7 @@
 
 .mobile-close-btn {
   background: rgba(255,255,255,0.07);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255,255,255,0.12);
   color: var(--white);
   width: 34px;
   height: 34px;
@@ -303,32 +360,12 @@
   transition: background 0.2s;
 }
 
-.mobile-close-btn:hover {
-  background: rgba(255,255,255,0.15);
-}
+.mobile-close-btn:hover { background: rgba(255,255,255,0.15); }
 
-/* God Text in Drawer */
-.mobile-god-text {
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border-color);
-  background: rgba(250, 204, 21, 0.04);
-}
-
-.mobile-god-text p {
-  font-family: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #FFFFFF;
-  margin: 0 0 4px 0;
-  letter-spacing: 0.3px;
-  opacity: 0.95;
-}
-
-/* Nav Links in Drawer */
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  padding: 12px 0;
+  padding: 8px 0;
   flex: 1;
 }
 
@@ -337,7 +374,7 @@
   align-items: center;
   gap: 12px;
   padding: 14px 24px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255,255,255,0.85);
   text-decoration: none;
   font-size: 15px;
   font-weight: 600;
@@ -349,19 +386,15 @@
 .mobile-nav-links a:hover,
 .mobile-nav-links a:active {
   color: var(--yellow);
-  background: rgba(250, 204, 21, 0.07);
+  background: rgba(250,204,21,0.06);
   padding-left: 30px;
 }
 
-.mobile-nav-links a svg {
-  color: var(--yellow);
-  flex-shrink: 0;
-}
+.mobile-nav-links a svg { color: var(--yellow); flex-shrink: 0; }
 
-/* Contact in Drawer */
 .mobile-contact-info {
   padding: 16px 20px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid rgba(250,204,21,0.12);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -378,18 +411,11 @@
   transition: color 0.2s;
 }
 
-.mobile-contact-info a svg {
-  color: var(--yellow);
-  flex-shrink: 0;
-}
+.mobile-contact-info a svg { color: var(--yellow); flex-shrink: 0; }
+.mobile-contact-info a:hover { color: var(--yellow); }
 
-.mobile-contact-info a:hover {
-  color: var(--yellow);
-}
-
-/* Book Now in Drawer */
 .mobile-book-btn {
-  margin: 16px 20px 24px;
+  margin: 16px 20px 28px;
   background: var(--yellow);
   color: #000;
   border: none;
@@ -408,54 +434,47 @@
   transform: scale(1.02);
 }
 
-/* ===== RESPONSIVE BREAKPOINTS ===== */
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+/* ≤ 1100px — slightly smaller god text */
 @media (max-width: 1100px) {
-  .brand-god-blessing .god-line1 { font-size: 11.5px; }
-  .brand-god-blessing .god-line2 { font-size: 10.5px; }
+  .god-line1 { font-size: 11.5px; }
+  .god-line2 { font-size: 10.5px; }
+  .navbar-row1 { padding: 12px 24px; }
 }
 
+/* ≤ 900px — switch to mobile layout */
 @media (max-width: 900px) {
-  .nav-links { display: none; }
-  .nav-right { display: none; }
+  .nav-links  { display: none; }
+  .nav-right  { display: none; }
+  .desktop-god { display: none; }
   .hamburger-btn { display: flex; }
 
-  /* Show contact next to God name on mobile navbar */
-  .navbar-mobile-contact { display: flex; }
+  /* Show the full-width second row */
+  .navbar-row2 { display: flex; }
 
-  /* Smaller God text on mobile */
-  .brand-god-and-contact {
-    padding-left: 10px;
-    border-left-width: 1.5px;
-    gap: 3px;
-  }
-  .brand-god-blessing .god-line1 { font-size: 9px; white-space: normal; }
-  .brand-god-blessing .god-line2 { font-size: 8.5px; }
-}
-
-@media (max-width: 768px) {
-  .navbar { padding: 12px 16px; }
-  .brand-header-wrapper { gap: 8px; }
-  .brand-god-blessing .god-line1 { font-size: 8.5px; }
-  .brand-god-blessing .god-line2 { font-size: 8px; }
-  .navbar-mobile-contact a { font-size: 9.5px; }
+  .navbar-row1 { padding: 10px 16px; }
 }
 
 @media (max-width: 520px) {
-  .navbar { padding: 10px 12px; }
-  .brand-name { font-size: 20px; }
-  .brand-sub { font-size: 8px; letter-spacing: 2px; }
-  .brand-header-wrapper { gap: 6px; }
-  .brand-god-and-contact { padding-left: 8px; }
-  .brand-god-blessing .god-line1 { font-size: 8px; }
-  .brand-god-blessing .god-line2 { font-size: 7.5px; }
-  .navbar-mobile-contact a { font-size: 9px; }
+  .navbar-row1 { padding: 8px 12px; }
+  .brand-name  { font-size: 22px; }
+  .brand-sub   { font-size: 9px; letter-spacing: 2px; }
+  .navbar-row2 { padding: 6px 12px 8px; }
+  .row2-god .god-line1 { font-size: 9px; }
+  .row2-god .god-line2 { font-size: 8.5px; }
+  .row2-contact a { font-size: 9.5px; }
 }
 
-/* ===== BOOKING POPUP ===== */
+/* ================================================
+   BOOKING POPUP
+   ================================================ */
 .booking-popup-overlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0,0,0,0.8);
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
@@ -465,7 +484,7 @@
 
 .booking-popup {
   background: var(--navy);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(250,204,21,0.2);
   padding: 40px;
   border-radius: 24px;
   width: 90%;
@@ -477,7 +496,7 @@
 
 @keyframes popupFadeIn {
   from { opacity: 0; transform: scale(0.92) translateY(16px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .booking-popup .close-btn {
@@ -515,10 +534,10 @@
   width: 100%;
   padding: 14px 16px;
   border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
   color: var(--white);
-  font-family: 'Jost', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   transition: border-color 0.3s;
   box-sizing: border-box;
@@ -528,5 +547,5 @@
 .booking-form textarea:focus {
   outline: none;
   border-color: var(--yellow);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.05);
 }

@@ -18,26 +18,62 @@ const Reviews = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [filterRating, setFilterRating] = useState('All');
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState('');
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setNewReview({ ...newReview, image: reader.result });
+        setNewReview({ ...newReview, image: reader.result, file: file });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const submitReview = (e) => {
+  const submitReview = async (e) => {
     e.preventDefault();
     if (newReview.rating === 0) {
       alert("Please select a star rating!");
       return;
     }
-    setReviewsList([newReview, ...reviewsList]);
-    setShowWriteModal(false);
-    setNewReview({ name: '', location: '', text: '', rating: 0, image: null });
+    
+    setIsSubmitting(true);
+    setStatus('');
+
+    const formData = new FormData();
+    formData.append('_subject', 'New Review Submitted - Parthi Events');
+    formData.append('Name', newReview.name);
+    formData.append('Location', newReview.location);
+    formData.append('Rating', newReview.rating + ' Stars');
+    formData.append('Comments', newReview.text);
+    if (newReview.file) {
+      formData.append('Attachment', newReview.file);
+    }
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/parthithala350@gmail.com", {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        setStatus('Review sent to owner for approval!');
+        // Keep it in local state just for immediate feedback on screen
+        setReviewsList([newReview, ...reviewsList]);
+        setTimeout(() => {
+          setShowWriteModal(false);
+          setNewReview({ name: '', location: '', text: '', rating: 0, image: null, file: null });
+          setStatus('');
+        }, 2000);
+      } else {
+        setStatus('Failed to send review. Please try again.');
+      }
+    } catch (error) {
+      setStatus('An error occurred. Please try again later.');
+    }
+    setIsSubmitting(false);
   };
 
   const filteredReviews = filterRating === 'All' 
@@ -112,7 +148,14 @@ const Reviews = () => {
                 {newReview.image && <div className="img-preview-small">Image attached!</div>}
               </div>
 
-              <button type="submit" className="btn-yellow" style={{ width: '100%', marginTop: '10px' }}>Submit Review</button>
+              <button type="submit" className="btn-yellow" style={{ width: '100%', marginTop: '10px' }} disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit Review'}
+              </button>
+              {status && (
+                <p style={{ marginTop: '10px', color: status.includes('approval') ? '#4ade80' : '#f87171', fontSize: '14px', textAlign: 'center' }}>
+                  {status}
+                </p>
+              )}
             </form>
           </div>
         </div>

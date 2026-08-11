@@ -7,13 +7,14 @@ import Gallery from './components/Gallery';
 import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { AuthProvider } from './context/AuthContext';
 import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
 
   return (
-    <>
+    <AuthProvider>
       <Header setCurrentPage={setCurrentPage} />
       
       {currentPage === 'packages' && (
@@ -49,7 +50,7 @@ function App() {
       )}
 
       <Footer />
-    </>
+    </AuthProvider>
   )
 }
 

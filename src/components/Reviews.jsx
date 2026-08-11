@@ -1,25 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../utils/supabase';
+import { useAuth } from '../context/AuthContext';
 import './Reviews.css';
 
-const initialReviews = [
-  { name: 'Saravana', location: 'Karur', rating: 5, text: 'Parthi Events made our wedding absolutely perfect. The decorations were beyond our expectations!', image: null },
-  { name: 'Santhosh', location: 'Kallakurichi', rating: 5, text: 'Highly professional team. They handled our corporate event flawlessly from start to finish.', image: null },
-  { name: 'Ranjith', location: 'Dindigul', rating: 5, text: 'Best event planners in Kallakurichi. The theme birthday party for my kid was a huge hit.', image: null },
-  { name: 'Karthik', location: 'Salem', rating: 4, text: 'Great photography and stage decor. Slightly delayed on catering, but overall a fantastic experience.', image: null },
-  { name: 'Priya', location: 'Erode', rating: 5, text: 'The DJ party setup was insane! Best lighting and sound system we could have asked for.', image: null }
-];
-
 const Reviews = () => {
-  const [reviewsList, setReviewsList] = useState(initialReviews);
+  const { user } = useAuth();
+  const [reviewsList, setReviewsList] = useState([]);
   const [showWriteModal, setShowWriteModal] = useState(false);
   const [showAllModal, setShowAllModal] = useState(false);
   
-  const [newReview, setNewReview] = useState({ name: '', location: '', text: '', rating: 0, image: null });
+  const [newReview, setNewReview] = useState({ name: '', location: '', text: '', rating: 0, image: null, file: null });
   const [hoverRating, setHoverRating] = useState(0);
   const [filterRating, setFilterRating] = useState('All');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    const { data, error } = await supabase.from('reviews').select('*').order('created_at', { ascending: false });
+    if (data) setReviewsList(data);
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -34,6 +38,10 @@ const Reviews = () => {
 
   const submitReview = async (e) => {
     e.preventDefault();
+    if (!user) {
+      alert("Please log in to write a review!");
+      return;
+    }
     if (newReview.rating === 0) {
       alert("Please select a star rating!");
       return;
@@ -42,36 +50,48 @@ const Reviews = () => {
     setIsSubmitting(true);
     setStatus('');
 
-    const formData = new FormData();
-    formData.append('_subject', 'New Review Submitted - Parthi Events');
-    formData.append('Name', newReview.name);
-    formData.append('Location', newReview.location);
-    formData.append('Rating', newReview.rating + ' Stars');
-    formData.append('Comments', newReview.text);
-    if (newReview.file) {
-      formData.append('Attachment', newReview.file);
-    }
+    let imageUrl = null;
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/parthithala350@gmail.com", {
-        method: "POST",
-        body: formData
-      });
+      if (newReview.file) {
+        const fileExt = newReview.file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('reviews-images')
+          .upload(fileName, newReview.file);
+          
+        if (uploadError) throw uploadError;
 
-      if (response.ok) {
-        setStatus('Review sent to owner for approval!');
-        // Keep it in local state just for immediate feedback on screen
-        setReviewsList([newReview, ...reviewsList]);
-        setTimeout(() => {
-          setShowWriteModal(false);
-          setNewReview({ name: '', location: '', text: '', rating: 0, image: null, file: null });
-          setStatus('');
-        }, 2000);
-      } else {
-        setStatus('Failed to send review. Please try again.');
+        const { data: { publicUrl } } = supabase.storage
+          .from('reviews-images')
+          .getPublicUrl(fileName);
+          
+        imageUrl = publicUrl;
       }
+
+      const { error: dbError } = await supabase.from('reviews').insert([{
+        user_id: user.id,
+        name: newReview.name,
+        location: newReview.location,
+        rating: newReview.rating,
+        text: newReview.text,
+        image_url: imageUrl
+      }]);
+
+      if (dbError) throw dbError;
+
+      setStatus('Review submitted successfully!');
+      fetchReviews();
+      
+      setTimeout(() => {
+        setShowWriteModal(false);
+        setNewReview({ name: '', location: '', text: '', rating: 0, image: null, file: null });
+        setStatus('');
+      }, 2000);
+
     } catch (error) {
-      setStatus('An error occurred. Please try again later.');
+      setStatus('Failed to submit review: ' + error.message);
     }
     setIsSubmitting(false);
   };
@@ -96,7 +116,7 @@ const Reviews = () => {
           <div className="review-card" key={i}>
             <div className="review-stars">{renderStars(r.rating)}</div>
             <p className="review-text">"{r.text}"</p>
-            {r.image && <img src={r.image} alt="Review" className="review-img-preview" />}
+            {r.image_url && <img src={r.image_url} alt="Review" className="review-img-preview" />}
             <div className="review-author">
               <div className="review-avatar">{r.name.charAt(0)}</div>
               <div className="review-info">
@@ -184,7 +204,7 @@ const Reviews = () => {
                 <div className="review-card list-card" key={i}>
                   <div className="review-stars">{renderStars(r.rating)}</div>
                   <p className="review-text">"{r.text}"</p>
-                  {r.image && <img src={r.image} alt="Review" className="review-img-preview" />}
+                  {r.image_url && <img src={r.image_url} alt="Review" className="review-img-preview" />}
                   <div className="review-author">
                     <div className="review-avatar">{r.name.charAt(0)}</div>
                     <div className="review-info">

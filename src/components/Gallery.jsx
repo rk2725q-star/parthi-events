@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { supabase } from '../utils/supabase';
+import { useAuth } from '../context/AuthContext';
 import './Gallery.css';
-
-const galleryItems = [
-  // Add your gallery items here when uploaded, e.g.:
-  // { id: 1, category: 'Birthday', title: 'Welcome to the Party', src: '/images/bday1.png' },
-];
 
 const GalleryCard = ({ item, index, openViewer }) => {
   const cardRef = useRef(null);
@@ -52,7 +49,7 @@ const GalleryCard = ({ item, index, openViewer }) => {
       <div className="card-glass-overlay"></div>
       {!imgError ? (
         <img 
-          src={item.src} 
+          src={item.image_url} 
           alt={item.title} 
           loading={index < 4 ? "eager" : "lazy"} 
           decoding="async"
@@ -73,12 +70,72 @@ const GalleryCard = ({ item, index, openViewer }) => {
 };
 
 const Gallery = () => {
+  const { profile } = useAuth();
+  const [galleryItems, setGalleryItems] = useState([]);
+  
   const [viewerIndex, setViewerIndex] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panState, setPanState] = useState({ isPanning: false, startX: 0, startY: 0, x: 0, y: 0 });
   const [activeCategory, setActiveCategory] = useState('All');
+  
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const categories = ['All', 'Birthday', 'DJ Party', 'Marriage'];
+  
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  const fetchGallery = async () => {
+    const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
+    if (data) setGalleryItems(data);
+  };
+
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setUploadError('');
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    // Upload to Storage
+    const { error: uploadError } = await supabase.storage
+      .from('gallery-images')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      setUploadError(uploadError.message);
+      setUploading(false);
+      return;
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('gallery-images')
+      .getPublicUrl(filePath);
+
+    // Insert to DB
+    const title = prompt("Enter title for this photo:", "New Event Photo") || "Event Photo";
+    const cat = activeCategory === 'All' ? 'Birthday' : activeCategory;
+
+    const { error: dbError } = await supabase.from('gallery').insert([
+      { title, category: cat, image_url: publicUrl }
+    ]);
+
+    if (dbError) {
+      setUploadError(dbError.message);
+    } else {
+      fetchGallery(); // Refresh images
+    }
+    
+    setUploading(false);
+  };
+
   const filteredItems = activeCategory === 'All' 
     ? galleryItems 
     : galleryItems.filter(item => item.category === activeCategory);
@@ -200,6 +257,16 @@ const Gallery = () => {
           </button>
         ))}
       </div>
+
+      {profile?.role === 'owner' && (
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <label className="btn-yellow" style={{ cursor: 'pointer', padding: '10px 20px', display: 'inline-block' }}>
+            {uploading ? 'Uploading...' : '📸 Upload Photo'}
+            <input type="file" style={{ display: 'none' }} accept="image/*" onChange={handleUpload} disabled={uploading} />
+          </label>
+          {uploadError && <p style={{ color: '#f87171', marginTop: '10px' }}>{uploadError}</p>}
+        </div>
+      )}
 
       <div className="gallery-3d-grid">
         {filteredItems.length > 0 ? (

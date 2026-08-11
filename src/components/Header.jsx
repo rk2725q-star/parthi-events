@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import AuthModal from './AuthModal';
 import './Header.css';
 
 const Header = ({ setCurrentPage }) => {
   const [showBooking, setShowBooking] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, profile, logout } = useAuth();
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingStatus, setBookingStatus] = useState('');
 
@@ -98,6 +103,11 @@ const Header = ({ setCurrentPage }) => {
                 parthithala350@gmail.com
               </a>
             </div>
+            {user ? (
+              <button className="nav-btn" style={{ background: '#334155', color: '#fff' }} onClick={logout}>Logout</button>
+            ) : (
+              <button className="nav-btn" style={{ background: '#334155', color: '#fff' }} onClick={() => setShowAuth(true)}>Login</button>
+            )}
             <button className="nav-btn" onClick={() => setShowBooking(true)}>Book Now</button>
           </div>
 
@@ -183,7 +193,20 @@ const Header = ({ setCurrentPage }) => {
         <button className="mobile-book-btn" onClick={() => { setShowBooking(true); closeMenu(); }}>
           Book Now
         </button>
+
+        {user ? (
+          <button className="mobile-book-btn" style={{ background: '#334155', color: '#fff', marginTop: '0' }} onClick={() => { logout(); closeMenu(); }}>
+            Logout
+          </button>
+        ) : (
+          <button className="mobile-book-btn" style={{ background: '#334155', color: '#fff', marginTop: '0' }} onClick={() => { setShowAuth(true); closeMenu(); }}>
+            Login / Sign Up
+          </button>
+        )}
       </div>
+
+      {/* Auth Popup */}
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
 
       {/* Booking Popup */}
       {showBooking && (

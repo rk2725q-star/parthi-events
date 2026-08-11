@@ -4,6 +4,51 @@ import './Header.css';
 const Header = ({ setCurrentPage }) => {
   const [showBooking, setShowBooking] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [bookingStatus, setBookingStatus] = useState('');
+
+  const handleBookingSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setBookingStatus('');
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/parthithala350@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            _subject: "New Booking Request - Parthi Events",
+            Name: data.name,
+            Address: data.address,
+            Phone: data.phone,
+            Email: data.email,
+            Location: data.location,
+            Events: data.events
+        })
+      });
+
+      if (response.ok) {
+        setBookingStatus('Booking request sent successfully!');
+        e.target.reset();
+        setTimeout(() => {
+          setShowBooking(false);
+          setBookingStatus('');
+        }, 2000);
+      } else {
+        setBookingStatus('Failed to send request. Please try again.');
+      }
+    } catch (error) {
+      setBookingStatus('An error occurred. Please try again later.');
+    }
+    
+    setIsSubmitting(false);
+  };
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -147,14 +192,21 @@ const Header = ({ setCurrentPage }) => {
             <button className="close-btn" onClick={() => setShowBooking(false)}>×</button>
             <h3>Parthi Events</h3>
             <p className="booking-subtitle">Booking Details</p>
-            <form className="booking-form" onSubmit={(e) => { e.preventDefault(); alert("Booking Submitted Successfully!"); setShowBooking(false); }}>
-              <input type="text" placeholder="Name" required />
-              <input type="text" placeholder="Address" required />
-              <input type="tel" placeholder="Phone number" required />
-              <input type="email" placeholder="Email" required />
-              <input type="text" placeholder="Location" required />
-              <textarea placeholder="Events mention" rows="3" required></textarea>
-              <button type="submit" className="btn-yellow" style={{ width: '100%', padding: '14px', marginTop: '10px' }}>Submit Booking</button>
+            <form className="booking-form" onSubmit={handleBookingSubmit}>
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="text" name="address" placeholder="Address" required />
+              <input type="tel" name="phone" placeholder="Phone number" required />
+              <input type="email" name="email" placeholder="Email" required />
+              <input type="text" name="location" placeholder="Location" required />
+              <textarea name="events" placeholder="Events mention" rows="3" required></textarea>
+              <button type="submit" className="btn-yellow" style={{ width: '100%', padding: '14px', marginTop: '10px' }} disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Submit Booking'}
+              </button>
+              {bookingStatus && (
+                <p style={{ marginTop: '10px', color: bookingStatus.includes('successfully') ? '#4ade80' : '#f87171', fontSize: '14px', textAlign: 'center' }}>
+                  {bookingStatus}
+                </p>
+              )}
             </form>
           </div>
         </div>

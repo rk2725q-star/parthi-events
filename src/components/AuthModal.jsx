@@ -59,7 +59,8 @@ const AuthModal = ({ onClose }) => {
         ]);
 
         if (profileError) {
-          setError("Account created, but failed to save profile info.");
+          console.error("Profile Insert Error:", profileError);
+          setError("Account created, but failed to save profile info. (Check if Email Confirmations are turned OFF in Supabase)");
         } else {
           setMessage("Signup successful! You can now log in.");
           setIsLogin(true); // Switch to login view

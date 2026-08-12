@@ -31,12 +31,29 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const fetchProfile = async (userId) => {
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', userId)
       .single();
     
+    // Auto-heal: If profile doesn't exist (e.g. user missed running the SQL trigger), create it!
+    if (!data && error?.code === 'PGRST116') {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const role = user.user_metadata?.role || 'customer';
+        const name = user.user_metadata?.full_name || 'User';
+        
+        const { data: newProfile, error: insertError } = await supabase
+          .from('profiles')
+          .insert([{ id: userId, name, role }])
+          .select()
+          .single();
+          
+        if (newProfile) data = newProfile;
+      }
+    }
+
     if (data) {
       setProfile(data);
     }

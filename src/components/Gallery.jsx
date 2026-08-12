@@ -290,6 +290,26 @@ const Gallery = () => {
         ))}
       </div>
 
+      {/* TEMPORARY FIX BUTTON: REMOVE BEFORE LAUNCH */}
+      {profile && profile.role !== 'owner' && (
+        <div style={{ textAlign: 'center', marginBottom: '20px', padding: '15px', background: '#450a0a', border: '1px solid #ef4444', borderRadius: '8px' }}>
+          <p style={{ color: '#fca5a5', marginBottom: '10px' }}>Admin Quick Fix: Click below to force your account to become an Owner.</p>
+          <button 
+            className="btn-yellow" 
+            onClick={async () => {
+              const { error } = await supabase.from('profiles').update({ role: 'owner' }).eq('id', profile.id);
+              if (error) alert("Error: " + error.message);
+              else {
+                alert("Success! You are now an Owner. Please refresh the page!");
+                window.location.reload();
+              }
+            }}
+          >
+            Fix My Account (Make Me Owner)
+          </button>
+        </div>
+      )}
+
       {profile?.role === 'owner' && (
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <label className="btn-yellow" style={{ cursor: 'pointer', padding: '10px 20px', display: 'inline-block' }}>

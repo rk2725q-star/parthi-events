@@ -16,13 +16,45 @@ const Reviews = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
 
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const PAGE_SIZE = 20;
+
   useEffect(() => {
-    fetchReviews();
+    // Reset on mount
+    setPage(0);
+    setReviewsList([]);
+    setHasMore(true);
+    fetchReviews(0);
   }, []);
 
-  const fetchReviews = async () => {
-    const { data, error } = await supabase.from('reviews').select('*').order('created_at', { ascending: false });
-    if (data) setReviewsList(data);
+  const fetchReviews = async (pageIndex = 0) => {
+    const from = pageIndex * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(from, to);
+
+    if (data) {
+      if (pageIndex === 0) {
+        setReviewsList(data);
+      } else {
+        setReviewsList(prev => [...prev, ...data]);
+      }
+
+      if (data.length < PAGE_SIZE) {
+        setHasMore(false);
+      }
+    }
+  };
+
+  const loadMore = () => {
+    const next = page + 1;
+    setPage(next);
+    fetchReviews(next);
   };
 
   const handleImageUpload = (e) => {
@@ -218,6 +250,14 @@ const Reviews = () => {
                 </div>
               )) : (
                 <p className="no-reviews">No reviews found for this rating.</p>
+              )}
+              
+              {hasMore && filteredReviews.length > 0 && (
+                <div style={{ textAlign: 'center', margin: '20px 0' }}>
+                  <button className="btn-outline-white" onClick={loadMore}>
+                    Load More Reviews
+                  </button>
+                </div>
               )}
             </div>
           </div>

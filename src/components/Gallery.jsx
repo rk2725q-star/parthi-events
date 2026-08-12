@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '../utils/supabase';
 import { useAuth } from '../context/AuthContext';
 import './Gallery.css';
 
-const GalleryCard = ({ item, index, openViewer }) => {
+const GalleryCard = React.memo(({ item, index, openViewer }) => {
   const cardRef = useRef(null);
   const [style, setStyle] = useState({});
   const [imgError, setImgError] = useState(false);
@@ -67,7 +67,7 @@ const GalleryCard = ({ item, index, openViewer }) => {
       </div>
     </div>
   );
-};
+});
 
 const Gallery = () => {
   const { profile } = useAuth();
@@ -81,15 +81,47 @@ const Gallery = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const PAGE_SIZE = 20;
+
   const categories = ['All', 'Birthday', 'DJ Party', 'Marriage'];
   
   useEffect(() => {
-    fetchGallery();
+    // Reset when component mounts
+    setPage(0);
+    setGalleryItems([]);
+    setHasMore(true);
+    fetchGallery(0);
   }, []);
 
-  const fetchGallery = async () => {
-    const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
-    if (data) setGalleryItems(data);
+  const fetchGallery = async (pageIndex = 0) => {
+    const from = pageIndex * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    
+    const { data, error } = await supabase
+      .from('gallery')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(from, to);
+      
+    if (data) {
+      if (pageIndex === 0) {
+        setGalleryItems(data);
+      } else {
+        setGalleryItems(prev => [...prev, ...data]);
+      }
+      
+      if (data.length < PAGE_SIZE) {
+        setHasMore(false);
+      }
+    }
+  };
+
+  const loadMore = () => {
+    const next = page + 1;
+    setPage(next);
+    fetchGallery(next);
   };
 
   const handleUpload = async (e) => {
@@ -283,6 +315,14 @@ const Gallery = () => {
         )}
       </div>
 
+      {hasMore && filteredItems.length > 0 && (
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <button className="btn-outline-white" onClick={loadMore}>
+            Load More Photos
+          </button>
+        </div>
+      )}
+
       {viewerIndex !== null && (
         <div 
           className="fullscreen-viewer-overlay" 
@@ -305,7 +345,7 @@ const Gallery = () => {
           
           <div className="viewer-content">
             <img 
-              src={galleryItems[viewerIndex].src} 
+              src={galleryItems[viewerIndex].image_url} 
               alt={galleryItems[viewerIndex].title}
               className="viewer-main-img"
               style={{
@@ -325,7 +365,7 @@ const Gallery = () => {
             <div className="viewer-placeholder" style={{display: 'none'}}>
                <span style={{fontSize: '48px', marginBottom: '10px'}}>🖼️</span>
                <p style={{fontSize: '20px', fontWeight: 'bold'}}>Artwork Not Available Yet</p>
-               <p style={{fontSize: '14px', color: '#888', marginTop: '10px'}}>Please upload {galleryItems[viewerIndex].src}</p>
+               <p style={{fontSize: '14px', color: '#888', marginTop: '10px'}}>Please upload {galleryItems[viewerIndex].image_url}</p>
             </div>
           </div>
 
@@ -341,7 +381,7 @@ const Gallery = () => {
                 className={`thumb-btn ${idx === viewerIndex ? 'active' : ''}`}
                 onClick={(e) => { e.stopPropagation(); openViewer(idx); }}
               >
-                <img src={item.src} alt="" onError={(e) => e.target.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="%23333"/></svg>'} />
+                <img src={item.image_url} alt="" onError={(e) => e.target.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="%23333"/></svg>'} />
               </button>
             ))}
           </div>

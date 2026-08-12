@@ -46,6 +46,7 @@ const AuthModal = ({ onClose }) => {
         options: {
           data: {
             full_name: name,
+            role: role
           }
         }
       });
@@ -53,18 +54,8 @@ const AuthModal = ({ onClose }) => {
       if (authError) {
         setError(authError.message);
       } else if (data.user) {
-        // Insert into profiles
-        const { error: profileError } = await supabase.from('profiles').insert([
-          { id: data.user.id, name, role }
-        ]);
-
-        if (profileError) {
-          console.error("Profile Insert Error:", profileError);
-          setError("Account created, but failed to save profile info. (Check if Email Confirmations are turned OFF in Supabase)");
-        } else {
-          setMessage("Signup successful! You can now log in.");
-          setIsLogin(true); // Switch to login view
-        }
+        setMessage("Signup successful! You can now log in.");
+        setIsLogin(true); // Switch to login view
       }
     }
     setLoading(false);

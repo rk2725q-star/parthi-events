@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { supabase } from '../utils/supabase';
 import AuthModal from './AuthModal';
 import './Header.css';
 
@@ -22,21 +21,6 @@ const Header = ({ setCurrentPage }) => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      // 1. Save to Supabase Dashboard
-      const { error: dbError } = await supabase.from('bookings').insert([{
-        name: data.name,
-        address: data.address,
-        phone: data.phone,
-        email: data.email,
-        location: data.location,
-        events: data.events
-      }]);
-
-      if (dbError) {
-        console.error("Supabase booking insert error:", dbError);
-      }
-
-      // 2. Send Email Backup via FormSubmit
       const response = await fetch("https://formsubmit.co/ajax/parthithala350@gmail.com", {
         method: "POST",
         headers: { 
@@ -101,13 +85,10 @@ const Header = ({ setCurrentPage }) => {
           {/* Desktop Nav Links */}
           <div className="nav-links">
             <a href="#home" onClick={() => handleNav('home')}>Home</a>
-            <button className="nav-btn" onClick={() => handleNav('packages')}>Packages</button>
-            <button className="nav-btn" onClick={() => handleNav('gallery')}>Gallery</button>
-            <button className="nav-btn" onClick={() => handleNav('reviews')}>Reviews</button>
-            <button className="nav-btn" onClick={() => handleNav('contact')}>Contact</button>
-            {profile?.role === 'owner' && (
-              <button className="nav-btn" style={{ background: '#eab308', color: '#111', fontWeight: 'bold' }} onClick={() => handleNav('admin')}>Dashboard</button>
-            )}
+            <a href="#packages" onClick={(e) => { e.preventDefault(); handleNav('packages'); window.scrollTo(0,0); }}>Packages</a>
+            <a href="#gallery" onClick={(e) => { e.preventDefault(); handleNav('gallery'); window.scrollTo(0,0); }}>Gallery</a>
+            <a href="#reviews" onClick={() => handleNav('home')}>Reviews</a>
+            <a href="#contact" onClick={() => handleNav('home')}>Contact</a>
           </div>
 
           {/* Desktop Right: Contact + Book Now */}
@@ -196,12 +177,6 @@ const Header = ({ setCurrentPage }) => {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Contact
           </a>
-          {profile?.role === 'owner' && (
-            <a href="#admin" style={{ color: '#eab308' }} onClick={(e) => { e.preventDefault(); handleNav('admin'); window.scrollTo(0,0); closeMenu(); }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-              Admin Dashboard
-            </a>
-          )}
         </nav>
 
         <div className="mobile-contact-info">

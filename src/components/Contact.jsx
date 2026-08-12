@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { supabase } from '../utils/supabase';
 import './Contact.css';
 
 const Contact = () => {
@@ -15,18 +14,6 @@ const Contact = () => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      // 1. Save to Supabase Dashboard
-      const { error: dbError } = await supabase.from('messages').insert([{
-        name: data.name,
-        email: data.email,
-        message: data.message
-      }]);
-
-      if (dbError) {
-        console.error("Supabase message insert error:", dbError);
-      }
-
-      // 2. Send Email Backup via FormSubmit
       const response = await fetch("https://formsubmit.co/ajax/parthithala350@gmail.com", {
         method: "POST",
         headers: { 

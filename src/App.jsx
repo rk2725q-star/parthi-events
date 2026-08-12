@@ -7,7 +7,6 @@ import Gallery from './components/Gallery';
 import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AdminDashboard from './components/AdminDashboard';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
 
@@ -34,17 +33,6 @@ function App() {
       {currentPage === 'gallery' && (
         <div style={{ paddingTop: '40px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Gallery />
-          <div style={{ textAlign: 'center', marginBottom: '80px', marginTop: '20px' }}>
-            <button className="btn-yellow" style={{ padding: '14px 40px', fontSize: '16px' }} onClick={() => setCurrentPage('home')}>
-              ← Back to Home
-            </button>
-          </div>
-        </div>
-      )}
-
-      {currentPage === 'admin' && (
-        <div style={{ paddingTop: '80px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <AdminDashboard />
           <div style={{ textAlign: 'center', marginBottom: '80px', marginTop: '20px' }}>
             <button className="btn-yellow" style={{ padding: '14px 40px', fontSize: '16px' }} onClick={() => setCurrentPage('home')}>
               ← Back to Home
